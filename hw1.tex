@@ -1,0 +1,202 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\title{Math 502-HW1}
+\author{Tanner Crane}
+\date{February 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{2.2: 11, 12, 14}
+11. (Convex set, segment) 
+Let x and y be any two points within the closed unit ball $\bar{B}(0;1)$ which implies $||x|| \leq 1$ and $ ||y|| \leq 1$.
+We want to show that the closed unit ball is convex by choosing an arbitrary point z $\in \bar{B}(0;1)$ where $||z|| \leq 1$
+\\\\
+By the Triangle Inequality, $||z|| = ||\alpha x + (1-\alpha)y|| \leq ||\alpha x|| + ||(1-\alpha)y|| $. Since $0 \leq \alpha \leq 1$, $\alpha, 1-\alpha$ are nonnegative. So $|\alpha| = \alpha, |1-\alpha| = 1-\alpha$\\ Thus
+$||z|| = \alpha||x|| + (1-\alpha)||y||$ \\
+
+Finally, substitute the bounds $||x|| = 1$ and $ ||y|| = 1$:
+\\ $||z|| \leq \alpha||1|| + (1-\alpha)||1||$ \\
+$||z|| \leq \alpha + 1 -\alpha$ \\
+$||z|| \leq 1$
+\\\\
+Since $|z| \leq 1$ for any $z \in M$, the entire segment $M$ is contained within $\bar{B}(0; 1)$. Therefore, the closed unit ball is a convex set.
+\qed
+\\\\
+12. To show that $\phi(x)$ does not define a norm on the vector space of all ordered pairs, we can show that the unit ball in this metric is not convex, i.e. there is a line segment whose endpoints are in the unit ball, but the segment is not totally contained in it (there are points outside the unit ball that are on the segment) and therefore cannot be a norm. \\\\
+Consider the ordered pairs $ x = (1,0); y = (0,1); \alpha = \frac{1}{2}\to \frac{1}{2}x + (1-\frac{1}{2})y = (\frac{1}{2}, \frac{1}{2}) $
+\\
+However, $||\frac{1}{2}, \frac{1}{2}|| =(\sqrt{\frac{1}{2}}+\sqrt{\frac{1}{2}})^2 = 2 > 1$, so $(\frac{1}{2}, \frac{1}{2}) \notin \bar{B}(0;1)$ which is a contradiction to convexity. \qed
+\\
+\\
+14. If d is a metric on a vector space $X \neq {0}$ which is obtained from a norm, and $\bar{d}$ is defined by $\bar{d}(x,x) = 0, \bar{d}(x,y) = \bar{d}(x,y) + 1, (x\neq y)$
+show that $\bar{d}$ cannot be obtained from a norm. 
+\\
+\\
+Proof:
+If a metric $\bar{d}$ could be obtained from a norm, then it must satisfy absolute homogeneity by 2.2-9 lemma. i.e. $\bar{d}(\alpha x, \alpha y) = |\alpha|\bar{d}(x,y)$ \\
+$\forall x,y \in X, x\neq y$ and $\alpha$ any nonzero scalar.
+\\
+Assume $\bar{d}$ can be induced by a norm, then: 
+\\$\bar{d}(\alpha x, \alpha y) = ||\alpha x - \alpha y|| + 1 = |\alpha|||x-y|| + 1$ (LHS) \\
+By definition of the metric, 
+\\$|\alpha|\bar{d}(x,y) = |\alpha|(||x-y||+1) = |\alpha|||x-y|| + |\alpha|$ (RHS)
+\\
+\\
+For the condition to hold, LHS must equal RHS: 
+$|\alpha|||x-y||+1 = |\alpha|||x-y||+ |\alpha|$ 
+\\
+Choose $\alpha = 2$: $|\alpha|||x-y||+1 = |\alpha|||x-y||+ 2$ \\
+but $1 \neq 2$, a clear contradiction.
+\\
+Therefore, since $\bar{d}$ fails absolute homogeneity, it cannot be obtained from a norm. \qed
+
+
+
+
+
+
+
+\section{2.3: 7, 8, 9, 10}
+
+7. (Absolute Convergence) 
+
+$\Sigma||y_n||  \to \Sigma y_n$ if and only if the normed vector space is complete.(Banach). \\
+
+Proof by counterexample: \\
+Consider $y_n =\Sigma_{1}^\infty||\frac{1}{2^{n-1}}||$. The sum of the norms of $y_n =\Sigma_{1}^\infty||\frac{1}{2^{n-1}}||$ is $(1+\frac{1}{2} + \frac{1}{4} + \frac{1}{8}+ ...=2$. The series of norms converge on the finite number 2. 
+
+However, in an incomplete normed vector space, a sequence can be Cauchy  but fail to converge because the limit point does not exist within the space. For instance, the space (X) of all real-valued sequences with finitely many nonzero terms.
+\\
+Consider the partial sums of $S_N = \Sigma_1^N y_n$\\
+As $N \to \infty, S =(1,\frac{1}{2},\frac{1}{4}, \frac{1}{8}, ..., \frac{1}{2^{n-1}}, ...)$ \\
+The resulting sequence has infinitely many non-zero terms, but that doesn't exist within X as we defined it! $S \notin X$. The series does not converge in X because the limit of the partial sums exists outside the space. \qed
+\\
+\\
+8. If in a normed space X, absolute convergence of any series always 
+implies convergence of that series, show that X is complete.
+\\
+Proof: Want to show every Cauchy sequence in X converges to a limit within X. \\
+Let $(x_n)$ be an arbitrary Cauchy sequence in X, then for every $\epsilon > 0$, there exists an N such that $||x_n - x_m|| < \epsilon$ for all n,m $>$ N. Choose a subsequence (strictly increasing) ${(n_k)}_1^\infty$ such that $\forall k \geq 1: ||x_{n_{k+1}} - x_{n_k}|| < \frac{1}{2^k}$
+\\\\
+Consider the series $\Sigma_{k=1}^\infty (x_{n_{k+1}} - x_{n_k})$
+Check for absolute convergence by the triangle inequality: 
+$\Sigma_{k=1}^\infty ||x_{n_{k+1}} - x_{n_k}|| < \Sigma_{k=1}^\infty \frac{1}{2^k} = 1 < \infty$
+\\
+Therefore, the norms of the series converges, thus the series $\Sigma_{k=1}^\infty (x_{n_{k+1}} - x_{n_k})$ is absolutely convergent $\to$ the series converges to some element $s \in X$.
+\\
+Let $S_M$ be the Mth partial sum of the series. \\
+$S_M = \Sigma_{k=1}^{M-1} (x_{n_{k+1}} - x_{n_k}) = (x_{n_M} -x_{n_1}) $
+\\
+Since the series converges to s, we have $\lim_{M\to\infty S_M = s}$. Substituting the partial sum definition. 
+\\
+\\
+$\lim_{M\to\infty (x_{n_M} -x_{n_1}) = s} $ 
+\\
+\\
+$\lim_{M\to\infty} x_{n_M} = s + x_{n_1} $
+\\
+\\
+The subsequence $(x_{n_M})$ converges to $s + x_{n_1}$. However, because $(x_n)$ is a Cauchy sequence and has a convergent subsequence, the entire sequence $(x_n)$ must converge to the same limit. Therefore, X is complete. \qed
+\\
+\\
+9. Show that in a Banach space, an absolutely convergent series is convergent.
+\\
+(Recall that a normed vector space that is complete is a Banach space, and in a complete space, the absolute convergence of a series implies its convergence.)
+\\
+Proof: 
+\\
+Want to show that if the series of norms converges absolutely this implies the series converges.(Assume series of norms is absolutely convergent) i.e.
+\\
+$\Sigma_{n=1}^\infty ||x_n|| < \infty \to \Sigma_{n=1}^\infty x_n$ converges. 
+\\
+\\
+Let $S_N = \Sigma_{n=1}^N x_n$ be a sequence of partial sums. $\forall N > M \in \mathbb{N}$, consider $S_N - S_M = \Sigma_{n=M+1}^N x_n$.
+\\
+\\
+By the Triangle Inequality,  $||S_N - S_M|| = ||\Sigma_{n=M+1}^N x_n|| \leq \Sigma_{n=M+1}^N ||x_n|| $.
+Then for every $\epsilon > 0$, there exists some integer K such that $N > M > K $ so the difference of partial sums of the norms: $|T_N - T_M| $ = $ \Sigma_{n=M+1}^N ||x_n|| < \epsilon$
+\\
+\\
+Finally, $||S_N - S_M|| \leq \Sigma_{n=M+1}^N ||x_n|| < \epsilon$. So the series of partial sums, $(S_N)$, is Cauchy in X, and X is a Banach space, thus the sequence $(S_N)$ must converge to some limit S $\in$ X.
+\\
+Therefore, the series $\Sigma_{n=1}^\infty x_n$ converges.
+\qed
+\\
+\\
+10. (Schauder Basis)
+\\
+Let X be Banach with a Schauder basis $ (e_n)_{n=1}^\infty$ then  any $x \in X$ can be uniquely represented as: 
+\\
+$x = \Sigma_{n=1}^\infty a_ne_n$ where $a_n$ are scalars. 
+\\
+\\
+Define the set D as the set of all finite linear combinations of the basis vectors with rational coefficients: $D = {\Sigma_{n=1}^k q_ne_n : k \in \mathbb{N}, q_n \in \mathbb{Q}}$ (We are making the assumption we are working in $\mathbb{R}$)
+\\
+The set D is the countable union of countable sets, and since the countable union of countable sets is countable, D is countable. 
+\\
+\\
+We need to show D is dense in X, so for any $x \in X$ and any $\epsilon > 0$, there exists a y $\in$ D such that $||x-y|| < \epsilon$ Since $\Sigma a_ne_n$ converges, the tail must approach 0. There exists some N such that the remainder is small: 
+\\
+$|| x -\Sigma_{n=1}^Na_ne_n|| < \epsilon/2$
+\\
+\\
+Let $ y = \Sigma_{n=1}^Nq_ne_n$
+\\
+\\
+Then by the Triangle Inequality, and picking our $q_n$ values carefully enough: $||\Sigma_{n=1}^Na_ne_n -\Sigma_{n=1}^Nq_ne_n || < \epsilon/2$
+By combining these, we get $||x-y|| < \epsilon$
+\\
+\\
+Therefore, since we can always find a $y \in D$ for any $\epsilon > 0$, D is dense in X, and thus X is separable. \qed 
+
+\section{Prove the triangle inequality in $l^\infty$}
+Proof: Let $x=(x_n), y=(y_n), n \in \mathbb{N}$ be elements of $l^\infty$. The norm in $l^\infty$ is: $||x||_\infty = \sup_{n\in \mathbb{N}}|x_n|$
+\\
+\\
+By Triangle Inequality, $|x_n+y_n| \leq |x_n| + |y_n|$. By definition of supremum, $\forall n, |x_n| \leq ||x_n||_\infty, |y_n|\leq ||y_n||_\infty$. Therefore, $|x_n+y_n| \leq ||x_n||_\infty + ||y_n||_\infty$
+\\
+\\
+It follows that: $\sup_{n\in \mathbb{N}} |x_n+y_n| \leq  ||x_n||_\infty + ||y_n||_\infty$. This is the definition of the $l^\infty$ norm of the sum x+y. Hence, $||x+y||_\infty \leq ||x_n||_\infty + ||y_n||_\infty $
+\\
+\\
+This holds for any bounded sequences x and y, and thus the Triangle Inequality is satisfied. \qed
+
+\section{Prove that for real numbers x, y, we have $|x-y| = x + y - min(x,y)$.  Based on this derive that the distance in 
+$l^1$ can be related to sums of terms in the respective sequences.}
+\\
+The correct identity is $|x-y| = x+y-2min(x,y)$ with two cases for any $x,y \in \mathbb{R}$.
+\\
+\\
+Case 1 $x \geq y$: $|x-y| = x-y$
+\\
+let $min(x,y) = y$, then $|x-y| = x+y - 2(y) = x-y$
+\\
+$|x-y| = x-y$ \checkmark
+\\
+\\
+Case 2 $y \geq x: |x-y| = y-x$
+\\
+let $min(x,y) = x$, then $|x-y| = x+y-2(x) = y-x$
+\\
+$|x-y| = y-x$ \checkmark
+\\
+\\
+Since this covers all possible relationships between $x,y \in \mathbb{R}, $$|x-y| = x+y-2min(x,y)$ is proven. \qed
+\\
+\\
+Derivation:
+$d(x,y) = \Sigma_{n=1}^\infty|x_n-y_n|$
+\\
+Using the identity, $d(x,y) = \Sigma_{n=1}^\infty x_n+y_n-2min(x_n,y_n)$
+\\
+Because x and y are in $l^1$, we know their individual sums converge absolutely.  $d(x,y) = \Sigma_{n=1}^\infty x_n + \Sigma_{n=1}^\infty y_n-2\Sigma_{n=1}^\infty min(x_n,y_n)$
+\\
+\\
+This derivation shows that the $l^1$ distance between two sequences is exactly equal to the sum of the elements of the first sequence, plus the sum of the elements of the second sequence, minus twice their intersection.
+\end{document}
