@@ -1,0 +1,115 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\title{Math502-Midterm (Proofs)}
+\author{Tanner Crane}
+\date{March 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Covering and Packing Numbers in $R^k$}
+(a) Prove that $N(T, d, \epsilon) \le N^*(T, d, \epsilon)$ 
+\\
+Proof: Let $N = N^*(T, d, \epsilon)$ then let $P = \{ t_1, t_2, .... t_N \}$ be such a maximal packing set. Assume, for contradiction, P does not form an $\epsilon-cover$ of T. This means there exists some $x \in T$ such that $ x \notin \cup_{j=1}^{N} B(t_j,\epsilon),$
+\\
+which implies $d(x,t_i) \geq \epsilon \forall i \in \{ 1, 2, ..., N\} $ If this is true, we could add $x$ to our set $P$ to create a new set of size $N + 1$, where every point is still at least $\epsilon$ apart from every other point. But this contradicts that N is the largest integer for which a packing exists. Therefore, our assumption must be false. The balls of radius $\epsilon$ centered at $t_1, \dots, t_N$ must successfully cover $T$ and the smallest possible number of balls required to cover T cannot exceed this amount. 
+\\
+$N(T, d, \epsilon) \le N^*(T, d, \epsilon)$ \qed 
+\\
+\\
+(a) Prove that if $\epsilon' > 2\epsilon$, then $N^*(T, d, \epsilon') \le N(T, d, \epsilon)$
+\\
+Proof: Let $P$ be an $\epsilon'$-packing of size $M = N^*(T, d, \epsilon')$ and $C$ be an $\epsilon$-cover of size $K = N(T, d, \epsilon)$. If $M > K$, the Pigeonhole Principle dictates that at least one $\epsilon$-ball in $C$ contains two distinct points $x, y \in P$. By the triangle inequality, the distance between them is at most the diameter of the ball: $d(x, y) \leq 2\epsilon$. However, since $x$ and $y$ are in an $\epsilon'$-packing, $d(x, y) \geq \epsilon'$. This implies $\epsilon' \leq 2\epsilon$, contradicting our premise that $\epsilon' > 2\epsilon$. Thus, $M \leq K$.
+\qed
+\\
+\\
+(b) Prove: $N(A, d, \epsilon) \geq \frac{\text{Vol}(A)}{\text{Vol}(\epsilon B)}$
+\\
+Proof: Let $N = N(A, d, \epsilon)$. By definition, $A \subset \bigcup_{i=1}^N B(x_i, \epsilon)$ for some centers $x_i \in \mathbb{R}^k$. By the subadditivity and translation invariance of the Lebesgue measure, the volume of $A$ is bounded by the sum of the volumes of the covering balls:$$\text{Vol}(A) \leq \sum_{i=1}^N \text{Vol}(B(x_i, \epsilon)) = N \cdot \text{Vol}(\epsilon B)$$
+\\
+Therefore, $\frac{\text{Vol}(A)}{\text{Vol}(\epsilon B)} \leq N(A,d,\epsilon)$
+\qed
+\\
+\\
+(b) Prove: $N^*(A, d, 2\epsilon) \leq \frac{\text{Vol}(A + \epsilon B)}{\text{Vol}(\epsilon B)}$
+\\
+\\
+Proof: Let $P = \{t_1, ..., t_M\} \subset A$ be a maximal $2\epsilon$-packing, so $M = N^*(A, d, 2\epsilon)$. Consider the balls $B(t_i, \epsilon)$. They are disjoint because if $B(t_i, \epsilon)$ and $B(t_j, \epsilon)$ intersected at a point $z$, the triangle inequality would yield $d(t_i, t_j) \leq d(t_i, z) + d(z, t_j) < 2\epsilon$, contradicting the $2\epsilon$-packing property.
+\\
+Every point in $B(t_i, \epsilon)$ can be written as $t_i + y$ where $y \in \epsilon B$. Since $t_i \in A$, the union of all such balls is strictly contained within the Minkowski sum $A + \epsilon B$. Summing the volumes of these disjoint balls gives:$$M \cdot \text{Vol}(\epsilon B) \leq \text{Vol}(A + \epsilon B)$$
+Therefore, 
+$$N(A, d, 2\epsilon) \leq N^*(A, d, 2\epsilon) \leq \frac{\text{Vol}(A + \epsilon B)}{\text{Vol}(\epsilon B)}$$ \qed
+\\
+\\
+(c) Apply part (b) with $A = B$ to show there exists $\epsilon_0 > 0$ (you may take $\epsilon_0 \leq 1$ ) such that $\forall 0 < \epsilon \leq \epsilon_0$. 
+\\
+Proof:
+Using the volume scaling property $\text{Vol}(c B) = c^k \text{Vol}(B)$ for $c > 0$, we get:$$N(B, d, \epsilon) \geq \frac{\text{Vol}(B)}{\text{Vol}(\epsilon B)} = \frac{\text{Vol}(B)}{\epsilon^k \text{Vol}(B)} = \left(\frac{1}{\epsilon}\right)^k$$
+\\
+Let $M = N^*(B, d, \epsilon)$ be the size of a maximal $\epsilon$-packing of $B$. By definition, the centers $x_i \in B$ are separated by at least $\epsilon$. Consider $B(x_i, \frac{\epsilon}{2})$: They are disjoint because the centers are at least $\epsilon$ apart. Since $x_i \in B$, every point in $B(x_i, \frac{\epsilon}{2})$ is contained in the Minkowski sum $B + \frac{\epsilon}{2}B = B(1+\frac{\epsilon}{2})$. Adding the volumes of these disjoint balls and bounding it by the volume of the containing set gives:$$M \cdot \text{Vol}\left(\frac{\epsilon}{2} B\right) \leq \text{Vol}\left(\left(1 + \frac{\epsilon}{2}\right)B\right)$$Substitute the scaled volumes:$$M \cdot \left(\frac{\epsilon}{2}\right)^k \text{Vol}(B) \leq \left(1 + \frac{\epsilon}{2}\right)^k \text{Vol}(B)$$ Since $N(B, d, \epsilon) \leq M$ from part (a):$$N(B, d, \epsilon) \leq \frac{(1 + \frac{\epsilon}{2})^k}{(\frac{\epsilon}{2})^k} = \left(\frac{1 + \frac{\epsilon}{2}}{\frac{\epsilon}{2}}\right)^k = \left(\frac{2 + \epsilon}{\epsilon}\right)^k$$
+\\
+Combining both bounds yields:$$\left(\frac{1}{\epsilon}\right)^k \leq N(B, d, \epsilon) \leq \left(\frac{2 + \epsilon}{\epsilon}\right)^k$$Since $\frac{2+\epsilon}{\epsilon} = \frac{2}{\epsilon} + 1$, the $O(\epsilon^{-k})$ term dominates both the upper and lower bounds as $\epsilon \downarrow 0$, proving that $N(B, d, \epsilon)$ grows like $\epsilon^{-k}$. \qed
+\\
+\\
+(d) 
+Proof: 
+From part (c)$$\left(\frac{1}{\epsilon}\right)^k \leq N(B, d, \epsilon) \leq \left(1 + \frac{2}{\epsilon}\right)^k$$(Lower bound $c_1$): For any $\epsilon > e_n(B)$, we know $N(B, d, \epsilon) \leq 2^{n-1}$.So, $$\left(\frac{1}{\epsilon}\right)^k \leq 2^{n-1} \implies \epsilon \geq 2^{-(n-1)/k} = 2^{1/k} 2^{-n/k}$$Because this holds for all $\epsilon > e_n(B)$, taking the infimum gives $e_n(B) \geq c_1 2^{-n/k}$, where $c_1 = 2^{1/k}$. \\
+\\
+(Upper bound $c_2$): To ensure $N(B, d, \epsilon) \leq 2^{n-1}$, we just need to find an $\epsilon$ that satisfies $$\left(1 + \frac{2}{\epsilon}\right)^k \leq 2^{n-1} \implies \frac{2}{\epsilon} \leq 2^{(n-1)/k} - 1$$For $n \geq k + 1$, the term $2^{(n-1)/k} \geq 2$. Using the algebraic fact that $x - 1 \geq x/2$ for any $x \geq 2$, we can simplify the right side:$$\frac{2}{\epsilon} \leq \frac{1}{2} 2^{(n-1)/k} \implies \epsilon \geq 4 \cdot 2^{1/k} 2^{-n/k}$$Choosing $\epsilon = 4 \cdot 2^{1/k} 2^{-n/k}$ guarantees the cover exists, meaning $e_n(B) \leq \epsilon$.To cover the trivial cases where $n \leq k$ (since $e_n(B) \leq 1$), we simply set $c_2 = \max(1 \cdot 2^{k/k}, 4 \cdot 2^{1/k})$. This makes $e_n(B) \leq c_2 2^{-n/k}$ hold for all $n \in \mathbb{N}$
+\qed
+
+\section{Finite-dimensional approximations of a Hilbert ball}
+(a)
+Proof: Let $x \in H$. Because $(e_j)_{j\geq 1}$ is an orthonormal basis, $x$ is perfectly represented by its Fourier series, $x = \sum_{j=1}^{\infty} \langle x, e_j \rangle e_j$.We define $x_n$ as the $n$-th partial sum:$$x_n = \sum_{j=1}^{n} \langle x, e_j \rangle e_j$$
+\\
+\\
+Density in H: By definition, $x_n$ is a finite linear combination of the first $n$ basis vectors, so $x_n \in H_n$ for all $n$. Because the infinite series converges to $x$, we know $x_n \to x$. This demonstrates that any $x \in H$ can be approximated by a sequence in $\bigcup_{n\geq 1} H_n$, proving the union is dense in $H$.
+\\
+\\
+Density in B: Suppose $x$ is specifically in the unit ball $B$, meaning $\|x\| \leq 1$. Using Parseval's identity, we can compare the squared norm of our partial sum $x_n$ to the full vector $x$:$$\|x_n\|^2 = \sum_{j=1}^{n} |\langle x, e_j \rangle|^2 \leq \sum_{j=1}^{\infty} |\langle x, e_j \rangle|^2 = \|x\|^2 \leq 1$$Because $\|x_n\|^2 \leq 1$, it follows that $\|x_n\| \leq 1$. Since $x_n$ is both in $H_n$ and bounded by $1$, $x_n \in B_n$. We already established that $x_n \to x$, which proves that $\bigcup_{n\geq 1} B_n$ is dense in $B$.  \qed
+\\
+\\
+(b) Proof: Let $\eta > 0$. Because $K$ is compact, it is totally bounded and thus admits a finite $\frac{\eta}{2}$-net, say $\{x_1, \dots, x_m\}$. Since $K \subset B$, each $x_i \in B$.Let $P_k(x)$ denote the $k$-th partial sum of $x$ in the basis. From the previous part, we know $P_k(x_i) \in B_k$ and $P_k(x_i) \to x_i$ as $k \to \infty$. Because there are only finitely many points in our net, we can choose a single, sufficiently large dimension $n \in \mathbb{N}$ such that $\|x_i - P_n(x_i)\| \leq \frac{\eta}{2}$ for all $i = 1, ..., m$. Now, let $x \in K$ be arbitrary. By the definition of the net, there exists some $x_i$ such that $\|x - x_i\| \leq \frac{\eta}{2}$. Let $y = P_n(x_i)$, which is in $B_n$. Using the triangle inequality, we find:$$\|x - y\| \leq \|x - x_i\| + \|x_i - P_n(x_i)\| \leq \frac{\eta}{2} + \frac{\eta}{2} = \eta$$Thus, for every $x \in K$, there is a $y \in B_n$ within a distance of $\eta$ \qed
+\\
+\\
+(c) Proof: Let $K_n = P_n(K)$, where $P_n$ is the orthogonal projection onto $H_n$. Because every $y \in K_n$ is of the form $P_n(x)$ for some $x \in K$, the Hausdorff distance simplifies to the uniform bound:$$d_H(K, K_n) \leq \sup_{x \in K} \|x - P_n(x)\|$$Let $\eta > 0$. Because $K$ is compact, it is totally bounded and admits a finite $\frac{\eta}{3}$-net, $\{x_1, \dots, x_m\}$. Since $P_n(x_i) \to x_i$ as $n \to \infty$ for each $i$, there exists an $N \in \mathbb{N}$ such that for all $n \geq N$ and all $i = 1, \dots, m$:$$\|x_i - P_n(x_i)\| \leq \frac{\eta}{3}$$For an arbitrary $x \in K$, choose an $x_i$ from the net such that $\|x - x_i\| \leq \frac{\eta}{3}$. Noting that orthogonal projections are non-expansive ($\|P_n(u) - P_n(v)\| \leq \|u - v\|$), we apply the triangle inequality for any $n \geq N$:$$\|x - P_n(x)\| \leq \|x - x_i\| + \|x_i - P_n(x_i)\| + \|P_n(x_i) - P_n(x)\|$$$$\|x - P_n(x)\| \leq \frac{\eta}{3} + \frac{\eta}{3} + \frac{\eta}{3} = \eta$$Taking the supremum over all $x \in K$, we get $d_H(K, K_n) \leq \eta$ for all $n \geq N$. Thus, $d_H(K, K_n) \to 0$ as $n \to \infty$
+\qed
+\section{Minimization of a quadratic functional (ridge regression
+in a Hilbert space)}
+(a) Proof: 
+\\
+Self-Adjoint: For any $u, v \in H$, linearity and the symmetry of the real inner product yield:$$\langle Su, v \rangle = \left\langle \frac{1}{n} \sum_{i=1}^n \langle u, x_i \rangle x_i, v \right\rangle = \frac{1}{n} \sum_{i=1}^n \langle u, x_i \rangle \langle x_i, v \rangle$$$$= \frac{1}{n} \sum_{i=1}^n \langle v, x_i \rangle \langle u, x_i \rangle = \left\langle u, \frac{1}{n} \sum_{i=1}^n \langle v, x_i \rangle x_i \right\rangle = \langle u, Sv \rangle$$ Positive Semidefinite: ($\langle Sw, w \rangle \geq 0$)For any $w \in H$:$$\langle Sw, w \rangle = \frac{1}{n} \sum_{i=1}^n \langle w, x_i \rangle \langle x_i, w \rangle = \frac{1}{n} \sum_{i=1}^n \langle w, x_i \rangle^2$$Since it is a sum of squares, $\langle Sw, w \rangle \geq 0$.3. Rewriting $J(w)$Expand $J(w) = \frac{1}{2n} \sum_{i=1}^n (y_i - \langle w, x_i \rangle)^2 + \lambda \|w\|^2$:$$J(w) = \frac{1}{2} \left[ \frac{1}{n} \sum_{i=1}^n \langle w, x_i \rangle^2 \right] - \left\langle \frac{1}{n} \sum_{i=1}^n y_i x_i, w \right\rangle + \frac{1}{2n} \sum_{i=1}^n y_i^2 + \frac{1}{2} \langle 2\lambda I w, w \rangle$$Substitute $\langle Sw, w \rangle$ for the first bracket, $b$ for the linear term, and $C = \frac{1}{2n} \sum y_i^2$:$$J(w) = \frac{1}{2}\langle Sw, w\rangle - \langle b, w\rangle + C + \frac{1}{2}\langle 2\lambda I w, w\rangle$$Combine the quadratic terms using the linearity of the inner product:$$J(w) = \frac{1}{2} \langle (S + 2\lambda I)w, w \rangle - \langle b, w \rangle + C$$ \qed
+\\
+\\
+(b) Proof: 
+\\
+To prove that $S + 2\lambda I$ is coercive, we must show there exists an $\alpha > 0$ such that $\langle (S + 2\lambda I)w, w \rangle \geq \alpha \|w\|^2$ for all $w \in H$.By the linearity of the inner product, we can expand the left side:$$\langle (S + 2\lambda I)w, w \rangle = \langle Sw, w \rangle + \langle 2\lambda Iw, w \rangle$$From part (a), we already established that $S$ is positive semidefinite, which gives us:$$\langle Sw, w \rangle \geq 0$$For the second term, we apply the definition of the identity operator $I$ and the definition of the norm induced by the inner product:$$\langle 2\lambda Iw, w \rangle = 2\lambda \langle w, w \rangle = 2\lambda \|w\|^2$$Substituting these back into our expanded equation yields:$$\langle (S + 2\lambda I)w, w \rangle = \langle Sw, w \rangle + 2\lambda \|w\|^2 \geq 0 + 2\lambda \|w\|^2$$Let $\alpha = 2\lambda$. Since we are given that the regularization parameter $\lambda > 0$, it immediately follows that $\alpha > 0$.Therefore, we have found an $\alpha > 0$ such that:$$\langle (S + 2\lambda I)w, w \rangle \geq \alpha \|w\|^2$$ \qed
+\\
+\\
+(c) Proof: 
+\\
+Let $A = S + 2\lambda I$. We can define a bilinear form $a: H \times H \to \mathbb{R}$ and a linear functional $F: H \to \mathbb{R}$ as follows:$$a(u, v) := \langle Au, v \rangle$$$$F(v) := \langle b, v \rangle$$This allows us to rewrite the functional (ignoring the constant $C$, which doesn't affect minimization) as:$$J(w) = \frac{1}{2}a(w, w) - F(w) + C$$ To apply the Lax-Milgram theorem, $a(u, v)$ must be continuous and coercive, and $F(v)$ must be continuous:
+\\
+Symmetric: $a(u, v) = \langle Au, v \rangle = \langle u, Av \rangle = a(v, u)$ because both $S$ and $I$ are self-adjoint.
+\\
+Bounded (Continuous): $|a(u, v)| \leq \|A\| \|u\| \|v\|$ since $A$ is a bounded linear operator, and $|F(v)| \leq \|b\| \|v\|$ by the Cauchy-Schwarz inequality.
+\\
+Coercive: $a(w, w) = \langle Aw, w \rangle \geq 2\lambda\|w\|^2$, which we proved in part (b).
+\\
+Because $a(\cdot, \cdot)$ is symmetric, bounded, and coercive, it defines a new, equivalent inner product on $H$. By the Lax-Milgram theorem (which generalizes the Riesz Representation Theorem for such forms), there exists a unique $w^* \in H$ that satisfies the variational equation:$$a(w^*, v) = F(v) \quad \forall v \in H$$Standard calculus of variations dictates that for a symmetric, coercive bilinear form, satisfying this variational equation is the exact necessary and sufficient condition for $w^*$ to be the strict, unique global minimizer of the functional $J(w)$.
+\\
+\\
+Now, substitute the original definitions of $a$ and $F$ back into the variational equation:$$\langle Aw^*, v \rangle = \langle b, v \rangle \quad \forall v \in H$$By linearity of the inner product, we can combine the terms:$$\langle Aw^* - b, v \rangle = 0 \quad \forall v \in H$$The only vector orthogonal to every vector $v$ in a Hilbert space is the zero vector. Therefore:$$Aw^* - b = 0 \implies Aw^* = b$$Substitute $A = S + 2\lambda I$ back in to get the final characterization:$$(S + 2\lambda I)w^* = b$$ \qed
+\\
+\\
+(d) Proof: The inner product is the dot product $\langle w, x_i \rangle = x_i^\top w$. Because $x_i^\top w$ is a scalar, we can rearrange the vector multiplication: $x_i(x_i^\top w) = (x_i x_i^\top)w$. Substitute this into the definition of $S$:$$Sw = \frac{1}{n} \sum_{i=1}^n x_i(x_i^\top w) = \left( \frac{1}{n} \sum_{i=1}^n x_i x_i^\top \right) w = \Sigma w$$
+
+From the abstract normal equation $(S + 2\lambda I)w^* = b$, substitute $Sw^* = \Sigma w^*$, $I = I_d$, and the definition of $b$ from part (a):$$(\Sigma + 2\lambda I_d)w^* = \frac{1}{n} \sum_{i=1}^n y_i x_i$$
+\\
+Ridge Regression Interpretation: Let $X \in \mathbb{R}^{n \times d}$ be the design matrix (with rows $x_i^\top$) and $y \in \mathbb{R}^n$ be the label vector. We can rewrite the components in matrix form:$\Sigma = \frac{1}{n}X^\top X$$\frac{1}{n} \sum y_i x_i = \frac{1}{n}X^\top y$Substitute these into the normal equation and multiply by $n$:$$\left(\frac{1}{n}X^\top X + 2\lambda I_d\right)w^* = \frac{1}{n}X^\top y \implies (X^\top X + 2\lambda n I_d)w^* = X^\top y$$Solving for $w^*$ yields the classic Ridge Regression closed-form solution:$$w^* = (X^\top X + 2\lambda n I_d)^{-1} X^\top y$$ \qed
+\end{document}
