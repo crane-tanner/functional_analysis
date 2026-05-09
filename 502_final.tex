@@ -1,0 +1,229 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+
+\title{Math 502 Final Project}
+\author{Tanner Crane}
+\date{April-May 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Problem 1}
+ Let $H$ be a real Hilbert space. For each $n \in \mathbb{N}$, let $K_n \subset H$ be a nonempty bounded closed convex set containing $0$. Define its support function by
+\[
+h_{K_n}(x) := \sup_{y \in K_n} \langle x, y \rangle, \quad x \in H
+\]
+\\
+\\
+1.
+For $x, z \in H$,
+ \[
+ h_{K_n}(x + z) = \sup_{y \in K_n} \langle x + z, y \rangle = \sup_{y \in K_n} (\langle x, y \rangle + \langle z, y \rangle)
+\]
+Applying the property that the supremum of a sum is bounded by the sum of the suprema yields:
+ \[
+ h_{K_n}(x + z) \leq \sup_{y \in K_n} \langle x, y \rangle + \sup_{y \in K_n} \langle z, y \rangle = h_{K_n}(x) + h_{K_n}(z)
+\]
+
+For $x \in H$ and $\lambda \geq 0$,
+\[
+ h_{K_n}(\lambda x) = \sup_{y \in K_n} \langle \lambda x, y \rangle = \sup_{y \in K_n} \lambda \langle x, y \rangle
+\]
+Factoring the non-negative scalar $\lambda$ out of the supremum gives:
+\[
+h_{K_n}(\lambda x) = \lambda \sup_{y \in K_n} \langle x, y \rangle = \lambda h_{K_n}(x)
+ \]
+
+For $x = 0$,
+\[
+h_{K_n}(0) = \sup_{y \in K_n} \langle 0, y \rangle
+\]
+Since $\langle 0, y \rangle = 0$ for all $y \in H$ and $K_n$ is non-empty, we have:
+\[
+ h_{K_n}(0) = \sup_{y \in K_n} 0 = 0
+\]
+
+ Given that $K_n$ is a bounded set in a Hilbert space, there exists a constant $M > 0$ such that $\|y\| \leq M$ for all $y \in K_n$. Applying the Cauchy-Schwarz inequality results in:
+\[
+ h_{K_n}(x) = \sup_{y \in K_n} \langle x, y \rangle \leq \sup_{y \in K_n} \|x\| \|y\| \leq \|x\| M
+\]
+ Since $\|x\| < \infty$, the support function is bounded:
+\[
+h_{K_n}(x) < \infty
+ \]
+\\
+\\
+2. Proof: Let $X_m = \{ x \in H : \sup_{n \ge 1} h_{K_n}(x) \le m \}$. As intersections of closed half-spaces, each $X_m$ is closed. 
+\\
+Pointwise boundedness guarantees $\bigcup_{m=1}^\infty X_m = H$.
+\\
+\\
+By the Baire Category Theorem, some $X_m$ contains an open ball $B(x_0, r)$. For any $v \in H$ with $\|v\| \le 1$, the vector $z = x_0 + \frac{r}{2}v$ lies in $B(x_0, r)$, so $h_{K_n}(z) \le m$ for all $n$. 
+\\
+\\
+Let $M = \sup_{n \ge 1} h_{K_n}(-x_0) < \infty$. Using subadditivity and positive homogeneity, we find $\frac{r}{2}h_{K_n}(v) = h_{K_n}(z - x_0) \le h_{K_n}(z) + h_{K_n}(-x_0) \le m + M$. 
+\\
+\\
+Thus, for all unit vectors $v$, $h_{K_n}(v) \le \frac{2(m+M)}{r} := C$. Finally, for any $x \in H$, $h_{K_n}(x) = \|x\|h_{K_n}\left(\frac{x}{\|x\|}\right) \le C\|x\|$. 
+\\
+\\
+3. Proof: For any $y \in K_n$, the definition of the support function gives $h_{K_n}(y) \geq \langle y, y \rangle = \|y\|^2$.
+\\
+\\
+From the previous result, we also know $h_{K_n}(y) \leq C\|y\|$. Combining these yields $\|y\|^2 \leq C\|y\|$, which immediately implies $\|y\| \leq C$. Thus, $K_n \subset B(0, C)$. 
+\\
+\\
+4. The maximum of a linear functional on a convex polytope occurs at a vertex. Thus, $h_{K_n}(x) = \max_{y \in \{0, e_1, \dots, e_n\}} \langle x, y \rangle = \max(0, x_1, \dots, x_n)$.
+\\
+\\
+Taking the supremum over $n$ gives $\sup_{n \ge 1} h_{K_n}(x) = \max(0, \sup_{j \ge 1} x_j)$.
+\\
+Since every coordinate satisfies $x_j \le \sqrt{\sum x_i^2} = \|x\|_{\ell^2}$, we immediately obtain $\sup_{n \ge 1} h_{K_n}(x) \le \|x\|_{\ell^2}$.
+\\
+\\
+This explicit computation confirms the abstract bound with the sharp constant $C=1$, which exactly aligns with the geometric inclusion $K_n \subset \overline{B}(0,1)$.
+\section{Problem 2}
+Let $f\in L^2(0,1)$ and consider the boundary value problem
+$$-u''(x) + u(x) = f(x),$$
+with homogeneous Dirichlet boundary conditions
+$$u(0) = u(1) = 0.$$
+Let $$H := H^1_0(0,1)$$, equipped with the norm
+$$\|u\|_H := \left( \int_0^1 |u'(x)|^2 \, dx + \int_0^1 |u(x)|^2 \, dx \right)^{1/2}.$$
+\\
+\\
+1.  Multiplying $-u''(x) + u(x) = f(x)$ by a test function $v \in H^1_0(0,1)$, integrating over $(0,1)$, and applying integration by parts with $v(0)=v(1)=0$ yields:
+$$
+\int_0^1 u'(x)v'(x) \, dx + \int_0^1 u(x)v(x) \, dx = \int_0^1 f(x)v(x) \, dx \quad \forall v \in H^1_0(0,1).
+$$
+\\
+2.  Applying the Cauchy-Schwarz inequality for $L^2$ and then for $\mathbb{R}^2$ yields:
+\[
+|a(u,v)| \leq \|u'\|_{L^2}\|v'\|_{L^2} + \|u\|_{L^2}\|v\|_{L^2} \leq \|u\|_H\|v\|_H.
+\]
+ By the definition of the $H$-norm:
+\[
+a(u,u) = \|u'\|_{L^2}^2 + \|u\|_{L^2}^2 = \|u\|_H^2.
+\]
+
+ By Cauchy-Schwarz and the fact that $\|v\|_{L^2} \leq \|v\|_H$:
+\[
+|\ell(v)| \leq \|f\|_{L^2}\|v\|_{L^2} \leq \|f\|_{L^2}\|v\|_H.
+\]
+ Since $a(\cdot,\cdot)$ is a bounded and coercive bilinear form, and $\ell(\cdot)$ is a bounded linear functional on the Hilbert space $H$, the Lax-Milgram theorem guarantees a unique $u \in H$ such that $a(u,v) = \ell(v)$ for all $v \in H$.
+\\
+\\
+3. Because the finite-dimensional space $V_h \subset H$ is closed, it is a Hilbert space. The bilinear form $a(\cdot,\cdot)$ and linear functional $\ell(\cdot)$ naturally inherit their boundedness and coercivity on $V_h$ from $H$. Therefore, by the Lax-Milgram theorem, there exists a unique $u_h \in V_h$ satisfying $a(u_h, v_h) = \ell(v_h)$ \quad $\forall v_h \in V_h$.
+\\
+\\
+4. Since $V_h \subset H$, the exact solution $u$ satisfies the variational problem for test functions in the subspace: $a(u, v_h) = \ell(v_h)$ for all $v_h \in V_h$. Subtracting the discrete Galerkin equation $a(u_h, v_h) = \ell(v_h)$ from this relation and applying the bilinearity of $a(\cdot,\cdot)$ immediately yields $a(u - u_h, v_h) = 0$ for all $v_h \in V_h$.
+\\
+\\
+5. 
+Let $v_h \in V_h$ be arbitrary. Using coercivity, Galerkin orthogonality ($a(u-u_h, w_h)=0$ for all $w_h \in V_h$, noting $v_h-u_h \in V_h$), and boundedness:
+\[
+\|u - u_h\|_H^2 = a(u - u_h, u - u_h)
+\]
+\[
+= a(u - u_h, u - v_h) + a(u - u_h, v_h - u_h)
+\]
+\[
+= a(u - u_h, u - v_h) \leq \|u - u_h\|_H \|u - v_h\|_H.
+\]
+Assuming $u \neq u_h$, dividing by $\|u - u_h\|_H$ and taking the infimum over all $v_h \in V_h$ yields:
+\[
+\|u - u_h\|_H \leq \inf_{v_h \in V_h} \|u - v_h\|_H.
+\]
+
+Interpretation: 
+Céa's Lemma guarantees that the Galerkin method computes the ``best approximation'' of the exact solution possible within the chosen finite element space $V_h$, measured in the $H$-norm.
+\\
+\\
+\section{Problem 4}
+Let $H$ be a separable Hilbert space with orthonormal basis $(e_k)_{k \ge 1}$. Fix $R > 0$ and consider the closed ball
+$$B_R := \{x \in H : \|x\| \le R\}.$$
+Define a metric on $B_R$ by
+$$d_w(x,y) := \sum_{k=1}^{\infty} 2^{-k} \frac{|\langle x-y, e_k \rangle|}{1 + |\langle x-y, e_k \rangle|}.$$
+\\
+\\
+1. Is it well-defined? For any $x, y \in B_R$, the terms satisfy $0 \le \frac{|\langle x-y, e_k \rangle|}{1 + |\langle x-y, e_k \rangle|} < 1$. Thus, $d_w(x,y) \le \sum_{k=1}^{\infty} 2^{-k} = 1$, so the series converges absolutely.
+\\
+\\
+ Both hold trivially by the non-negativity and symmetry of the absolute value: $|\langle x-y, e_k \rangle| \ge 0$ and $|\langle x-y, e_k \rangle| = |\langle y-x, e_k \rangle|$. \\
+ \\
+ Since it is a sum of non-negative terms, $d_w(x,y) = 0 \iff |\langle x-y, e_k \rangle| = 0$ for all $k \ge 1$. Because $(e_k)_{k \ge 1}$ is a basis, the only vector orthogonal to all basis elements is the zero vector, hence $x-y = 0 \iff x = y$.
+\\
+\\
+Consider the function $f(t) = \frac{t}{1+t}$ for $t \ge 0$. Since $f'(t) > 0$, $f$ is strictly increasing. It is also subadditive because $\frac{u+v}{1+u+v} \le \frac{u}{1+u} + \frac{v}{1+v}$. 
+ \\
+ \\
+By the standard triangle inequality and linearity of the inner product:
+ $$|\langle x-z, e_k \rangle| \le |\langle x-y, e_k \rangle| + |\langle y-z, e_k \rangle|$$
+\\
+\\
+Applying the increasing, subadditive function $f$ to both sides yields:
+$$\frac{|\langle x-z, e_k \rangle|}{1 + |\langle x-z, e_k \rangle|} \le \frac{|\langle x-y, e_k \rangle|}{1 + |\langle x-y, e_k \rangle|} + \frac{|\langle y-z, e_k \rangle|}{1 + |\langle y-z, e_k \rangle|}$$
+\\
+Multiplying by $2^{-k}$ and summing over $k$ preserves the inequality, directly yielding $d_w(x,z) \le d_w(x,y) + d_w(y,z)$. \qed
+\\
+\\
+2.\textbf{($\implies$)} Assume $x_n \rightharpoonup x$. For each $k$, $\langle x_n - x, e_k \rangle \to 0$. Let $a_{n,k} = 2^{-k} \frac{|\langle x_n - x, e_k \rangle|}{1 + |\langle x_n - x, e_k \rangle|}$. We have $a_{n,k} \xrightarrow{n \to \infty} 0$ and $0 \le a_{n,k} \le 2^{-k}$. Since $\sum 2^{-k} = 1 < \infty$, the dominated convergence lemma for series implies $d_w(x_n, x) = \sum_{k=1}^\infty a_{n,k} \to 0$.
+
+\textbf{($\impliedby$)} Assume $d_w(x_n, x) \to 0$. By non-negativity, $2^{-k}\frac{|\langle x_n - x, e_k \rangle|}{1 + |\langle x_n - x, e_k \rangle|} \le d_w(x_n, x) \to 0$, which forces $\langle x_n - x, e_k \rangle \to 0$ for all $k$. 
+Let $y \in H$ and $\epsilon > 0$. Since $\text{span}\{e_k\}$ is dense, choose a finite sum $y_N = \sum_{k=1}^N c_k e_k$ such that $\|y - y_N\| < \frac{\epsilon}{4R}$. Because $x_n, x \in B_R$, we have $\|x_n - x\| \le 2R$. Thus,
+$$|\langle x_n - x, y \rangle| \le \|x_n - x\|\|y - y_N\| + \sum_{k=1}^N |c_k| |\langle x_n - x, e_k \rangle| < \frac{\epsilon}{2} + \sum_{k=1}^N |c_k| |\langle x_n - x, e_k \rangle|$$
+Taking $n \to \infty$, the finite sum approaches $0$, yielding $\limsup_{n \to \infty} |\langle x_n - x, y \rangle| \le \frac{\epsilon}{2} < \epsilon$. Since $\epsilon$ is arbitrary, $\langle x_n, y \rangle \to \langle x, y \rangle$, meaning $x_n \rightharpoonup x$.
+\\
+\\
+3. ($e_n \rightharpoonup 0$):} Let $y \in H$. By Bessel's inequality (or Parseval's identity), $\sum_{n=1}^\infty |\langle y, e_n \rangle|^2 \le \|y\|^2 < \infty$. Since the series converges, its individual terms must vanish, meaning $\lim_{n \to \infty} \langle y, e_n \rangle = 0$. Because $\langle e_n, y \rangle = \overline{\langle y, e_n \rangle} \to 0$ for all $y \in H$, $e_n \rightharpoonup 0$.
+\\
+\\
+ ($e_n \not\to 0$):} By definition of an orthonormal basis, $\|e_n\| = 1$ for all $n \ge 1$. Therefore, $\lim_{n \to \infty} \|e_n - 0\| = 1 \neq 0$, so $(e_n)$ does not converge strongly to $0$.
+ \\
+ \\
+ Applying the definition of the metric:
+$$d_w(e_n, 0) = \sum_{k=1}^{\infty} 2^{-k} \frac{|\langle e_n, e_k \rangle|}{1 + |\langle e_n, e_k \rangle|}$$
+By orthonormality, $\langle e_n, e_k \rangle = \delta_{n,k}$ ($1$ if $n=k$, and $0$ otherwise). Thus, all terms in the sum are zero except when $k=n$. Substituting this single non-zero term gives:
+$$d_w(e_n, 0) = 2^{-n} \frac{1}{1 + 1} = 2^{-(n+1)}$$
+\\
+\\
+4. From part (3), we have exactly $d_w(e_n, 0) = 2^{-(n+1)}$. To ensure $d_w(e_n, 0) \le \epsilon$, we set:
+$$2^{-(n+1)} \le \epsilon$$
+Taking the base-2 logarithm of both sides and rearranging yields:
+$$-(n+1) \le \log_2(\epsilon) \implies n \ge -\log_2(\epsilon) - 1$$
+Since the sequence index $n$ must be a positive integer, we define:
+$$N(\epsilon) = \max \Big(1, \lceil -\log_2(\epsilon) - 1 \rceil \Big)$$
+Thus, for all $n \ge N(\epsilon)$, $d_w(e_n, 0) \le \epsilon$.
+\\
+\\
+5. By the triangle inequality, $d_w(e_i, e_j) \le d_w(e_i, 0) + d_w(e_j, 0)$. 
+\\
+\\
+From part (3), we know $d_w(e_n, 0) = 2^{-(n+1)}$. To ensure $d_w(e_n, 0) \le \frac{\epsilon}{2}$, we need:
+$$2^{-(n+1)} \le \frac{\epsilon}{2} \implies n \ge -\log_2(\epsilon)$$
+
+Define $N = \max(1, \lceil -\log_2(\epsilon) \rceil)$. For any control function $g$ and any $i, j \in [N, N+g(N)]$, we have $i, j \ge N$. Therefore:
+$$d_w(e_i, e_j) \le 2^{-(i+1)} + 2^{-(j+1)} \le \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon$$
+
+This single choice of $N$ works for all $i, j$ in the interval, so the explicit metastability bound is independent of $g$:
+$$\Phi(\epsilon, g) = \max(1, \lceil -\log_2(\epsilon) \rceil)$$
+\\
+\\
+6. The dual space of $c_0$ is $(c_0)' = \ell_1$. Every bounded linear functional $f \in (c_0)'$ corresponds to a sequence $y = (y_k) \in \ell_1$ such that $f(x) = \sum_{k=1}^\infty x_k y_k$ for any $x = (x_k) \in c_0$. 
+Evaluating $f$ on $s_n = \sum_{k=1}^n e_k$, we get:
+$$f(s_n) = \sum_{k=1}^n y_k$$
+Because $y \in \ell_1$, the infinite series $\sum_{k=1}^\infty y_k$ converges absolutely, and thus the sequence of partial sums $(f(s_n))_{n=1}^\infty$ converges in the scalar field. Any convergent scalar sequence is a Cauchy sequence, meaning $(s_n)$ is weakly Cauchy.
+\\
+\\
+Suppose for contradiction that there exists some $s = (x_k) \in c_0$ such that $s_n \rightharpoonup s$. 
+For each $j \ge 1$, the coordinate projection $p_j(x) = x_j$ is a bounded linear functional on $c_0$ (corresponding to $e_j \in \ell_1$). Thus, weak convergence implies coordinate-wise convergence:
+$$x_j = p_j(s) = \lim_{n \to \infty} p_j(s_n)$$
+For all $n \ge j$, the $j$-th coordinate of $s_n$ is $1$. Therefore:
+$$x_j = \lim_{n \to \infty} 1 = 1$$
+This implies $s = (1, 1, 1, \dots)$. However, the sequence $(1, 1, 1, \dots)$ does not converge to $0$, so $s \notin c_0$. This contradiction proves that $(s_n)$ cannot converge weakly to any element in $c_0$.
+
+
+\end{document}
